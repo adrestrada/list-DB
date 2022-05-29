@@ -1,0 +1,22 @@
+import sqlite3
+con = sqlite3.connect('b_deb.dbf')
+cur = con.cursor()
+tb2 = '''create table if not exists employes2
+(id integer primary key autoincrement, nom text, salario real)'''
+
+cur.execute(tb2)
+<sqlite3.Cursor at 0x25a23553420>
+#insertando datos invocando cur
+nom = input('diga su nombre: ')
+salario = float(input('diga el salario: '))
+commande = 'insert into employes2(nom, salario) values(?,?)'
+cur.execute(commande, [nom, salario])
+# Save (commit) los cambios y invoco conexion(con)
+con.commit()
+#comentario: si ya he creado una base de datos y me da error de columnas y se ha guardado los cambios, 
+#hay que tener cuidado, 
+#es mejor crear otra base de datos y nombre de las tablas al igual el nombre del objeto que guarda mi tabla
+diga su nombre: jhj
+diga el salario: 87
+#si yaestoy segura de haber hecho my management cierro la conexion
+#con.close()
