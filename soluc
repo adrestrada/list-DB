@@ -1,0 +1,32 @@
+#BD sqlite
+import sqlite3
+#creer une connexion sur la BD
+conn = sqlite3.connect("bdeb.dbf")
+#script DDL
+cde_ddl = """create table if not exists usagers(
+id integer primary key autoincrement,
+nom text,
+age integer
+)
+"""
+#créer un curseur
+curseur = conn.cursor()
+#créer la table
+curseur.execute(cde_ddl)
+<sqlite3.Cursor at 0x2c1339c48f0>
+#Insertion des données
+cde = "insert into usagers(nom,age) values (?,?)"
+nom = input("Votre nom:")
+age = int(input("Votre age:"))
+curseur.execute(cde, [nom,age])
+conn.commit()
+#Select des données
+requete = "select id, nom, age from usagers where age = ?"
+mot_cle = int (input("Age recherché:"))
+curseur.execute(requete, [mot_cle,])
+#parcours du curseur
+print("=" * 50)
+for ligne in curseur:
+   print("ID:{} Nom:{} et Age:{}". format(ligne[0], ligne[1], ligne[2]))
+#fermer la BD
+conn.close()
